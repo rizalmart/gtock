@@ -71,6 +71,11 @@ except:
           "or set your PYTHONPATH correctly.\n"
           "try: export PYTHONPATH= "))
   sys.exit(1)
+  
+if os.path.exists(config.getAtbin())==False and os.path.exists(config.getCrontabbin())==False:
+    dialog = Gtk.MessageDialog(parent=None, flags=0, message_type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.OK, text="Please install CRON or AT")
+    dialog.run()
+    dialog.destroy()
 
 mainWindow = mainWindow.main(debug_flag, False, manual_poscorrect)
 

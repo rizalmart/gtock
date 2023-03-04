@@ -22,6 +22,7 @@
 from gi.repository import Gtk
 import gettext
 import locale
+import config
 
 from locale import gettext as _
 
@@ -33,9 +34,9 @@ class AddWindow:
         self.builder = self.ParentClass.builder
         
         self.window = self.builder.get_object("addWindow")
-        self.window.connect("focus-out-event", self.window.hide_on_delete)
+        self.window.connect("focus-out-event", self.on_close_button_clicked)
         self.window.connect("delete-event", self.on_close_button_clicked) 
-        self.window.connect("destroy", self.window.destroy)
+        #self.window.connect("destroy", self.window.destroy)
 
         self.mode = 0
         
@@ -87,6 +88,11 @@ class AddWindow:
         
         self.button_template.add(self.thbox)
         self.button_template.show_all()
+        
+        if config.atInstalled() == False:
+            self.button_at.hide()
+        if config.cronTabInstalled()==False:
+            self.button_crontab.hide() 
 
 
     # mode: 0 = normal add, 1 = new template
@@ -96,12 +102,17 @@ class AddWindow:
         self.transient = transient
         self.window.set_transient_for(transient)
         self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
-        self.window.show_all()
+        self.window.show()
         
         if (mode == 1):
             self.button_template.hide()
         elif (mode == 0):
             self.button_template.show_all()
+            
+        if config.atInstalled() == False:
+            self.button_at.hide()
+        if config.cronTabInstalled()==False:
+            self.button_crontab.hide() 
         
 
     def on_cancel_button_clicked (self, *args):

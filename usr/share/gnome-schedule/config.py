@@ -73,3 +73,9 @@ def GETTEXT_PACKAGE():
 
 def GNOMELOCALEDIR():
 	return locale_dir
+	
+def atInstalled():
+	return os.path.exists(atbin)
+	
+def cronTabInstalled():
+	return os.path.exists(crontabbin)

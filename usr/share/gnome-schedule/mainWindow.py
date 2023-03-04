@@ -24,9 +24,11 @@ import lang
 
 
 import gi
-#tell pyGTK, if possible, that we want GTKv2
+
+gtkver=3
+
 gi.require_version("GdkPixbuf", "2.0")
-gi.require_version("Gtk", "3.0")
+gi.require_version("Gtk", str(gtkver) + ".0")
 
 from gi.repository import GObject
 from gi.repository import Gtk
@@ -69,11 +71,12 @@ locale.textdomain(config.GETTEXT_PACKAGE())
 class main:
 	
     def __init__(self, debug_flag=None, inapplet=False, manual_poscorrect=False):
+		
         self.debug_flag = debug_flag
         self.inapplet = inapplet
         self.manual_poscorrect = manual_poscorrect
         
-        
+        self.gtk_version=gtkver
 
         self.__loadIcon__()
         #self.__loadGlade__()
@@ -97,8 +100,13 @@ class main:
 
 
         builder1 = Gtk.Builder()
-        builder1.add_from_file(config.getGladedir() + "/gnome-schedule-gtk3.glade")
         
+        if gtkver == 4:
+          builder1.add_from_file(config.getGladedir() + "/gnome-schedule-gtk4.glade")
+        else:
+          builder1.add_from_file(config.getGladedir() + "/gnome-schedule-gtk3.glade")
+			
+			
         self.builder=builder1
         
         self.window = builder1.get_object("mainWindow")
@@ -181,7 +189,9 @@ class main:
 
         self.add_button.connect ("clicked", self.on_add_button_clicked)
         self.add_button_menu_add_crontab.connect ("activate", self.on_add_crontab_task)
+        
         self.add_button_menu_add_at.connect ("activate", self.on_add_at_task)
+        
         self.add_button_menu_add_template.connect ("activate", self.on_add_from_template)
 
 
@@ -217,6 +227,11 @@ class main:
         self.button_template.connect ("clicked", self.on_template_manager_button)
 
         self.help_button.hide()
+        
+        if config.atInstalled() == False:
+            self.add_button_menu_add_at.hide()
+        if config.cronTabInstalled()==False:
+            self.add_button_menu_add_crontab.hide() 
 		
         ##inittializing the treeview and treemodel
         ## somethins not rite here..:
@@ -495,6 +510,7 @@ class main:
         col.pack_start (cell, True)
         col.pack_end (cell2, True)
         col.add_attribute (cell, "pixbuf", 6)
+        
         if mode == "simple":
             col.add_attribute (cell2, "text", 13)
         else:

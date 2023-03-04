@@ -20,8 +20,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
-import gi
-gi.require_version('Gtk', '3.0')
+#import gi
+#gi.require_version('Gtk', '4.0')
 
 from gi.repository import Gtk
 from gi.repository import GObject
@@ -515,6 +515,7 @@ class CrontabEditor:
             self.scheduler.update (self.minute, self.hour, self.day, self.month, self.weekday, self.command, self.linenumber, self.parentiter, self.output, self.job_id, self.comment, self.title, self.desc)
 
         elif self.mode == 0:
+            #print("append")
             self.scheduler.append (self.minute, self.hour, self.day, self.month, self.weekday, self.command, self.output, self.title)
             
         elif self.mode == 2:
@@ -555,12 +556,15 @@ class CrontabEditor:
                 self.template.savetemplate_crontab (self.tid, self.title, self.command, self.output, self.minute + " " + self.hour + " " + self.day + " " + self.month + " " + self.weekday)
 
             self.window.hide ()
+            self.ParentClass.template_manager.reload_tv()
             
             return
 
         self.ParentClass.schedule_reload()
-        self.ParentClass.template_manager.reload_tv()
-        self.ParentClass.template_manager.window.show()		
+        
+        if self.mode == 2:
+          self.ParentClass.template_manager.window.show()		
+        
         self.window.hide()	
 
 

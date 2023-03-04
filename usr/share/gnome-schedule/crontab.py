@@ -338,6 +338,7 @@ class Crontab:
 
 
     def append (self, minute, hour, day, month, weekday, command, output, title, desc = None):
+		
         if self.check_command (command) == False:
             return False
 
@@ -422,6 +423,10 @@ class Crontab:
 
     #read tasks in crontab
     def read (self, easy = True):
+		
+     if config.cronTabInstalled()==False:
+        return
+     else:	
 
         data = []
 
@@ -747,8 +752,8 @@ class Crontab:
 
         #replace crontab config with new one in file
         if self.root:
-            # print config.getCrontabbin () + " -u " + self.ParentClass.user + " " + path
-            os.system (config.getCrontabbin () + " " + path + " -u " + self.user)
+            #print(config.getCrontabbin () + " " + path + " -u " + self.user)
+            os.system (config.getCrontabbin () + " -u " + self.user + " " + path )
         else:
             # print config.getCrontabbin () + " " + path
             os.system (config.getCrontabbin () + " " + path)

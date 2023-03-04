@@ -536,6 +536,10 @@ fi
 
 
     def read (self):
+		
+        if config.atInstalled()==False:
+          return
+		
         data = []
         #do 'atq'
         execute = config.getAtqbin ()
