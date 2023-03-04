@@ -1,6 +1,6 @@
 # GNOME Task Scheduler (Community Edition)
 
-This a GTK+3 and Python 3.x port on GNOME Schedule for managing crontabs and at tasks
+This is the GTK+3 and Python 3.x port of GNOME Schedule for managing crontabs and at tasks
 
 See https://gnome-schedule.sourceforge.net/ for more details
 
