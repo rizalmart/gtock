@@ -1,7 +1,7 @@
-# gnome-schedule-ce
-GNOME Task Scheduler (Community Edition)
+#GNOME Task Scheduler (Community Edition)
 
 This a GTK+3 and Python 3.x port on GNOME Schedule for managing crontabs and at tasks
+
 See https://gnome-schedule.sourceforge.net/ for more details
 
 Note: Due to big difference between GTK+3, Python 3, and DConf compared to GTK+2, Python 2, and GConf. Its configuration was not backward compatible with gnome-schedule 2.x
