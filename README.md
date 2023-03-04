@@ -1,4 +1,4 @@
-#GNOME Task Scheduler (Community Edition)
+# GNOME Task Scheduler (Community Edition)
 
 This a GTK+3 and Python 3.x port on GNOME Schedule for managing crontabs and at tasks
 
