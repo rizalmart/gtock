@@ -1,0 +1,2 @@
+#! /bin/sh
+python3 /usr/share/gnome-schedule/gnome-schedule.py $1
