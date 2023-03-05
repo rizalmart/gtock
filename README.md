@@ -9,7 +9,7 @@ See https://gnome-schedule.sourceforge.net/ for more details
 
 
 Known issues:
-* GTK 4.x mode will not work for now due to conversion of problem of Glade file to GTK4
+* GTK 4 mode will not work for now due to conversion of problem of Glade file to GTK4
 
 How to enable experimental GTK4
 * Open /usr/share/gtock/config.py with a text editor
