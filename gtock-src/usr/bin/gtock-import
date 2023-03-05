@@ -1,0 +1,2 @@
+#! /bin/sh
+python3 /usr/share/gtock/gtock-import.py $1

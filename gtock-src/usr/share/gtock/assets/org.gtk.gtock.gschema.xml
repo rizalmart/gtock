@@ -1,0 +1,63 @@
+<schemalist>
+
+  <schema path="/org/gtk/gtock/" id="org.gtk.gtock">
+	  
+	  	<key name="inform-working-dir" type="b">
+			<default>true</default>
+		</key>
+		
+		<key name="inform-working-dir-crontab" type="b">
+			<default>true</default>
+		</key>
+		
+	    <key name="inform-working-dir-at" type="b">
+			<default>true</default>
+		</key>
+		
+	  	<key name="advanced" type="b">
+			<default>true</default>
+		</key>
+		
+	    <key name="window-height" type="i">
+			<default>400</default>
+		</key>
+		
+		<key name="window-width" type="i">
+			<default>600</default>
+		</key>
+		
+	    <key name="window-maximized" type="b">
+			<default>false</default>
+		</key>
+		
+		<key name="x-axis" type="i">
+			<default>0</default>
+		</key>
+		
+		<key name="y-axis" type="i">
+			<default>0</default>
+		</key>
+		
+		<key name="at-installed" type="as">
+			<default>[]</default>
+		</key>
+		
+		<key name="at-last-id" type="i">
+			<default>0</default>
+		</key>
+		
+		<key name="cron-installed" type="as">
+			<default>[]</default>
+		</key>
+		
+		<key name="cron-last-id" type="i">
+			<default>0</default>
+		</key>
+		
+		<key name="terminal-exec" type="s">
+			<default>"gnome-terminal -x"</default>
+		</key>
+		
+  </schema>
+
+</schemalist>

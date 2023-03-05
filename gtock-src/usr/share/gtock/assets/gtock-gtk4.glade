@@ -1,0 +1,1838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkDialog" id="addWindow">
+    <property name="border-width">12</property>
+    <property name="title" translatable="1">Add a Scheduled Task</property>
+    <property name="resizable">0</property>
+    <property name="modal">1</property>
+    <property name="window-position">center-on-parent</property>
+    <property name="type-hint">dialog</property>
+    <child internal-child="content_area">
+      <object class="GtkBox" id="select_dialog_vbox">
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkBox" id="select_hbox">
+            <property name="halign">center</property>
+            <property name="can-focus">0</property>
+            <property name="border-width">12</property>
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkImage" id="select_image">
+                <property name="halign">center</property>
+                <property name="yalign">0</property>
+                <property name="stock">gtk-dialog-question</property>
+                <property name="icon_size">6</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="select_vbox">
+                <property name="hexpand">1</property>
+                <property name="orientation">vertical</property>
+                <property name="can-focus">0</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="select_label">
+                    <property name="valign">center</property>
+                    <property name="ypad">5</property>
+                    <property name="label" translatable="1">&lt;b&gt;Select the type of the scheduled task:&lt;/b&gt;</property>
+                    <property name="use-markup">1</property>
+                    <property name="xalign">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkAlignment" id="select_radio_alignment">
+                    <property name="valign">center</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="xalign">0</property>
+                    <child>
+                      <object class="GtkBox" id="select_vbox1">
+                        <property name="orientation">vertical</property>
+                        <property name="can-focus">0</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkButton" id="button_crontab">
+                            <property name="vexpand">1</property>
+                            <property name="focusable">1</property>
+                            <property name="receives-default">1</property>
+                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                            <signal name="clicked" handler="on_button_crontab_clicked" swapped="no"/>
+                            <child>
+                              <placeholder/>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button_at">
+                            <property name="vexpand">1</property>
+                            <property name="focusable">1</property>
+                            <property name="receives-default">1</property>
+                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                            <signal name="clicked" handler="on_button_at_clicked" swapped="no"/>
+                            <child>
+                              <placeholder/>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button_templates">
+                            <property name="vexpand">1</property>
+                            <property name="focusable">1</property>
+                            <property name="receives-default">1</property>
+                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                            <signal name="clicked" handler="on_button_templates_clicked" swapped="no"/>
+                            <child>
+                              <placeholder/>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">select_cancel_button</action-widget>
+    </action-widgets>
+    <child internal-child="action_area">
+      <object class="GtkButtonBox" id="select_dialog_action_area">
+        <property name="halign">center</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="layout-style">end</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <object class="GtkButton" id="select_cancel_button">
+            <property name="label">gtk-cancel</property>
+            <property name="focusable">1</property>
+            <property name="can-default">True</property>
+            <property name="use-stock">True</property>
+            <signal name="clicked" handler="on_select_cancel_button_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkDialog" id="at_editor">
+    <property name="events">GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON2_MOTION_MASK | GDK_BUTTON3_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_FOCUS_CHANGE_MASK | GDK_STRUCTURE_MASK | GDK_PROPERTY_CHANGE_MASK | GDK_VISIBILITY_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK | GDK_PROXIMITY_OUT_MASK | GDK_SUBSTRUCTURE_MASK | GDK_SCROLL_MASK</property>
+    <property name="border-width">12</property>
+    <property name="title">Edit a one-time task</property>
+    <property name="window-position">center-on-parent</property>
+    <property name="default-width">430</property>
+    <property name="type-hint">dialog</property>
+    <signal name="delete-event" handler="on_at_editor_delete" swapped="no"/>
+    <signal name="event" handler="on_at_editor_size_changed" swapped="no"/>
+    <signal name="set-focus" handler="on_cal_lost_focus" swapped="no"/>
+    <child internal-child="content_area">
+      <object class="GtkBox" id="at_dialog_vbox">
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkBox" id="vbox8">
+            <property name="orientation">vertical</property>
+            <property name="can-focus">0</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkBox" id="title_box">
+                <property name="can-focus">0</property>
+                <property name="spacing">6</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <object class="GtkBox" id="vbox14">
+                    <property name="hexpand">1</property>
+                    <property name="orientation">vertical</property>
+                    <property name="can-focus">0</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkLabel" id="label1">
+                        <property name="valign">center</property>
+                        <property name="label" translatable="1">Task description:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="at_entry_title">
+                        <property name="valign">center</property>
+                        <property name="focusable">1</property>
+                        <signal name="changed" handler="on_at_entry_title_changed" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="cb_xoutput">
+                        <property name="vexpand">1</property>
+                        <property name="label" translatable="1">X application</property>
+                        <property name="focusable">1</property>
+                        <signal name="toggled" handler="on_cb_xoutput_toggled" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="at_vbox_time">
+                <property name="vexpand">1</property>
+                <property name="orientation">vertical</property>
+                <property name="can-focus">0</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <child>
+                  <object class="GtkLabel" id="label2">
+                    <property name="vexpand">1</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="label" translatable="1" comments="This comes before the time and date input boxes in the One-time task editor">Execute at:</property>
+                    <property name="xalign">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTable" id="table3">
+                    <property name="vexpand">1</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="n-rows">2</property>
+                    <property name="n-columns">7</property>
+                    <property name="column-spacing">5</property>
+                    <property name="row-spacing">5</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <object class="GtkAlignment" id="align_cal">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <child>
+                          <object class="GtkToggleButton" id="cal_button">
+                            <property name="focusable">1</property>
+                            <property name="receives-default">1</property>
+                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                            <signal name="toggled" handler="on_cal_button_toggled" swapped="no"/>
+                            <child>
+                              <placeholder/>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left-attach">6</property>
+                        <property name="right-attach">7</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label3">
+                        <property name="xpad">15</property>
+                        <property name="label" translatable="1">Date:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label4">
+                        <property name="xpad">15</property>
+                        <property name="label" translatable="1">Time:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="top-attach">1</property>
+                        <property name="bottom-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="at_spin_year">
+                        <property name="focusable">1</property>
+                        <property name="overwrite-mode">False</property>
+                        <property name="input-purpose">number</property>
+                        <property name="climb-rate">1</property>
+                        <property name="numeric">1</property>
+                        <property name="wrap">1</property>
+                        <signal name="value-changed" handler="on_at_spin_year_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="right-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label8">
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <property name="label">-</property>
+                        <property name="width-chars">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="right-attach">3</property>
+                        <property name="x-options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="at_spin_month">
+                        <property name="focusable">1</property>
+                        <property name="overwrite-mode">False</property>
+                        <property name="input-purpose">number</property>
+                        <property name="climb-rate">1</property>
+                        <property name="numeric">1</property>
+                        <property name="wrap">1</property>
+                        <signal name="value-changed" handler="on_at_spin_month_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="right-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label10">
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <property name="label">-</property>
+                        <property name="width-chars">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">4</property>
+                        <property name="right-attach">5</property>
+                        <property name="x-options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="at_spin_day">
+                        <property name="focusable">1</property>
+                        <property name="overwrite-mode">False</property>
+                        <property name="input-purpose">number</property>
+                        <property name="climb-rate">1</property>
+                        <property name="numeric">1</property>
+                        <property name="wrap">1</property>
+                        <signal name="value-changed" handler="on_at_spin_day_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left-attach">5</property>
+                        <property name="right-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="at_spin_hour">
+                        <property name="focusable">1</property>
+                        <property name="overwrite-mode">False</property>
+                        <property name="input-purpose">number</property>
+                        <property name="climb-rate">1</property>
+                        <property name="numeric">1</property>
+                        <property name="wrap">1</property>
+                        <signal name="value-changed" handler="on_at_spin_hour_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="right-attach">2</property>
+                        <property name="top-attach">1</property>
+                        <property name="bottom-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label5">
+                        <property name="label" translatable="1">:</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="right-attach">3</property>
+                        <property name="top-attach">1</property>
+                        <property name="bottom-attach">2</property>
+                        <property name="x-options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="at_spin_minute">
+                        <property name="focusable">1</property>
+                        <property name="overwrite-mode">False</property>
+                        <property name="input-purpose">number</property>
+                        <property name="climb-rate">1</property>
+                        <property name="numeric">1</property>
+                        <property name="wrap">1</property>
+                        <signal name="value-changed" handler="on_at_spin_minute_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="right-attach">4</property>
+                        <property name="top-attach">1</property>
+                        <property name="bottom-attach">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label6">
+                <property name="valign">center</property>
+                <property name="label" translatable="1">Task:</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolledwindow2">
+                <property name="vexpand">1</property>
+                <property name="focusable">1</property>
+                <property name="hscrollbar-policy">never</property>
+                <property name="shadow-type">in</property>
+                <property name="child">
+                  <object class="GtkTextView" id="at_text_task">
+                    <property name="height-request">244</property>
+                    <property name="focusable">1</property>
+                    <property name="wrap-mode">word-char</property>
+                    <property name="left-margin">5</property>
+                    <property name="right-margin">2</property>
+                    <signal name="key-release-event" handler="on_at_text_task_key_release_event" swapped="no"/>
+                    <signal name="popup-menu" handler="on_at_text_task_popup_menu" swapped="no"/>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">at_button_cancel</action-widget>
+    </action-widgets>
+    <child internal-child="action_area">
+      <object class="GtkButtonBox" id="at_dialog_action_area">
+        <property name="halign">center</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="layout-style">end</property>
+        <child>
+          <object class="GtkButton" id="at_button_template">
+            <property name="label" translatable="1">Add as template</property>
+            <property name="focusable">1</property>
+            <property name="can-default">True</property>
+            <property name="use-underline">1</property>
+            <signal name="clicked" handler="on_at_button_template_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="at_button_cancel">
+            <property name="label">gtk-cancel</property>
+            <property name="focusable">1</property>
+            <property name="can-default">True</property>
+            <property name="use-stock">True</property>
+            <signal name="clicked" handler="on_at_button_cancel_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="at_button_save">
+            <property name="label">gtk-add</property>
+            <property name="focusable">1</property>
+            <property name="can-default">True</property>
+            <property name="use-stock">True</property>
+            <signal name="clicked" handler="on_at_button_save_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="cal_window">
+    <property name="focusable">1</property>
+    <property name="can-default">True</property>
+    <property name="events">GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON2_MOTION_MASK | GDK_BUTTON3_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_FOCUS_CHANGE_MASK | GDK_STRUCTURE_MASK | GDK_PROPERTY_CHANGE_MASK | GDK_VISIBILITY_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK | GDK_PROXIMITY_OUT_MASK | GDK_SUBSTRUCTURE_MASK | GDK_SCROLL_MASK</property>
+    <property name="type">popup</property>
+    <property name="skip-taskbar-hint">True</property>
+    <property name="skip-pager-hint">True</property>
+    <property name="decorated">0</property>
+    <property name="deletable">0</property>
+    <signal name="delete-event" handler="on_cal_window_destroy" swapped="no"/>
+    <signal name="focus-out-event" handler="on_cal_lost_focus" swapped="no"/>
+    <property name="child">
+      <object class="GtkCalendar" id="calendar">
+        <property name="focusable">1</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <property name="year">2007</property>
+        <property name="month">10</property>
+        <property name="day">21</property>
+        <signal name="day-selected" handler="on_cal_day_selected" swapped="no"/>
+        <signal name="day-selected-double-click" handler="on_cal_day_selected_dc" swapped="no"/>
+        <signal name="month-changed" handler="on_cal_day_selected" swapped="no"/>
+        <signal name="next-year" handler="on_cal_day_selected" swapped="no"/>
+        <signal name="prev-year" handler="on_cal_day_selected" swapped="no"/>
+      </object>
+    </property>
+  </object>
+  <object class="GtkWindow" id="crontabEditorHelper">
+    <property name="border-width">12</property>
+    <property name="title" translatable="1">Time expression help</property>
+    <property name="resizable">0</property>
+    <property name="modal">1</property>
+    <property name="window-position">center-on-parent</property>
+    <property name="skip-taskbar-hint">True</property>
+    <property name="skip-pager-hint">True</property>
+    <property name="child">
+      <object class="GtkBox" id="vbox5">
+        <property name="orientation">vertical</property>
+        <property name="can-focus">0</property>
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkTable" id="table4">
+            <property name="vexpand">1</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="n-rows">9</property>
+            <property name="column-spacing">5</property>
+            <property name="row-spacing">1</property>
+            <child>
+              <object class="GtkAlignment" id="alignment4">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="left-padding">36</property>
+                <child>
+                  <object class="GtkBox" id="hbox6">
+                    <property name="can-focus">0</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkLabel" id="lblExpression">
+                        <property name="halign">center</property>
+                        <property name="label" translatable="1">Expression:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entExpression">
+                        <property name="halign">center</property>
+                        <property name="width-request">70</property>
+                        <property name="focusable">1</property>
+                        <property name="width-chars">8</property>
+                        <signal name="changed" handler="on_entExpression_changed" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="top-attach">8</property>
+                <property name="bottom-attach">9</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkAlignment" id="alignment3">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="left-padding">36</property>
+                <child>
+                  <object class="GtkBox" id="hbox5">
+                    <property name="can-focus">0</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkLabel" id="lblFixEntity">
+                        <property name="halign">center</property>
+                        <property name="label" translatable="1">Minute:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entFix">
+                        <property name="halign">center</property>
+                        <property name="width-request">40</property>
+                        <property name="focusable">1</property>
+                        <property name="width-chars">3</property>
+                        <signal name="changed" handler="on_entFix_changed" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="top-attach">6</property>
+                <property name="bottom-attach">7</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkAlignment" id="alignment2">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="left-padding">36</property>
+                <child>
+                  <object class="GtkTable" id="table1">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="n-rows">2</property>
+                    <property name="n-columns">2</property>
+                    <property name="column-spacing">6</property>
+                    <property name="row-spacing">6</property>
+                    <child>
+                      <object class="GtkEntry" id="entRangeEnd">
+                        <property name="focusable">1</property>
+                        <property name="width-chars">3</property>
+                        <signal name="changed" handler="on_entRangeEnd_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="right-attach">2</property>
+                        <property name="top-attach">1</property>
+                        <property name="bottom-attach">2</property>
+                        <property name="x-options">GTK_EXPAND</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lblRangeEnd">
+                        <property name="label" translatable="1">To:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="top-attach">1</property>
+                        <property name="bottom-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lblRangeStart">
+                        <property name="label" translatable="1">From:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entRangeStart">
+                        <property name="focusable">1</property>
+                        <property name="width-chars">3</property>
+                        <signal name="changed" handler="on_entRangeStart_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="right-attach">2</property>
+                        <property name="x-options">GTK_EXPAND</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="top-attach">4</property>
+                <property name="bottom-attach">5</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkAlignment" id="alignment1">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="left-padding">36</property>
+                <child>
+                  <object class="GtkBox" id="hbox2">
+                    <property name="can-focus">0</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkLabel" id="lblEveryEntity">
+                        <property name="halign">center</property>
+                        <property name="label" translatable="1">Minutes:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entEvery">
+                        <property name="halign">center</property>
+                        <property name="width-request">40</property>
+                        <property name="focusable">1</property>
+                        <property name="width-chars">3</property>
+                        <signal name="changed" handler="on_entEvery_changed" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="top-attach">2</property>
+                <property name="bottom-attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="radOth">
+                <property name="label" translatable="1">Other</property>
+                <property name="name">radOth</property>
+                <property name="tooltip-text" translatable="1">See &quot;man 5 crontab&quot; for information about the crontab format.</property>
+                <property name="use-underline">1</property>
+                <signal name="toggled" handler="on_radFix_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="top-attach">7</property>
+                <property name="bottom-attach">8</property>
+                <property name="x-options">GTK_FILL</property>
+                <property name="y-options"></property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="radFix">
+                <property name="label" translatable="1">At an exact minute</property>
+                <property name="name">radFix</property>
+                <property name="tooltip-text" translatable="1">Execution at a specific minute, hour, day, weekday or month.</property>
+                <property name="use-underline">1</property>
+                <property name="group">radOth</property>
+                <signal name="toggled" handler="on_radFix_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="top-attach">5</property>
+                <property name="bottom-attach">6</property>
+                <property name="x-options">GTK_FILL</property>
+                <property name="y-options"></property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="radRange">
+                <property name="label" translatable="1">In a range</property>
+                <property name="name">radRange</property>
+                <property name="tooltip-text" translatable="1">Execution in a range.</property>
+                <property name="use-underline">1</property>
+                <property name="group">radOth</property>
+                <signal name="toggled" handler="on_radRange_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="top-attach">3</property>
+                <property name="bottom-attach">4</property>
+                <property name="x-options">GTK_FILL</property>
+                <property name="y-options"></property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="radAll">
+                <property name="label" translatable="1">Every minute</property>
+                <property name="name">radAll</property>
+                <property name="tooltip-text" translatable="1">Execution at every minute, hour, day, weekday or month.</property>
+                <property name="use-underline">1</property>
+                <property name="active">1</property>
+                <property name="group">radOth</property>
+                <signal name="toggled" handler="on_radAll_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="x-options">GTK_FILL</property>
+                <property name="y-options"></property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="radEvery">
+                <property name="label" translatable="1">In a step width</property>
+                <property name="name">radEvery</property>
+                <property name="tooltip-text" translatable="1">Execution at a step width. For example every five minutes, hours, days, weekdays or months.</property>
+                <property name="use-underline">1</property>
+                <property name="group">radOth</property>
+                <signal name="toggled" handler="on_radEvery_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="top-attach">1</property>
+                <property name="bottom-attach">2</property>
+                <property name="x-options">GTK_FILL</property>
+                <property name="y-options"></property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkHButtonBox" id="hbuttonbox3">
+            <property name="valign">center</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="spacing">6</property>
+            <property name="layout-style">end</property>
+            <child>
+              <object class="GtkButton" id="btnCancel">
+                <property name="label">gtk-cancel</property>
+                <property name="focusable">1</property>
+                <property name="can-default">True</property>
+                <property name="use-stock">True</property>
+                <signal name="clicked" handler="on_btnCancel_clicked" swapped="no"/>
+                <accelerator key="Escape" signal="clicked"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btnOk">
+                <property name="label">gtk-ok</property>
+                <property name="focusable">1</property>
+                <property name="can-default">True</property>
+                <property name="use-stock">True</property>
+                <signal name="clicked" handler="on_btnOk_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+  <object class="GtkWindow" id="crontab_editor">
+    <property name="border-width">12</property>
+    <property name="title" translatable="1">Edit a periodical task</property>
+    <property name="modal">1</property>
+    <property name="type-hint">dialog</property>
+    <property name="skip-taskbar-hint">True</property>
+    <property name="skip-pager-hint">True</property>
+    <property name="child">
+      <object class="GtkBox" id="vbox11">
+        <property name="orientation">vertical</property>
+        <property name="can-focus">0</property>
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkBox" id="crontab_title_box">
+            <property name="can-focus">0</property>
+            <property name="spacing">6</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <object class="GtkTable" id="table2">
+                <property name="hexpand">1</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="n-rows">3</property>
+                <property name="n-columns">2</property>
+                <property name="column-spacing">6</property>
+                <property name="row-spacing">6</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="entry_task">
+                    <property name="focusable">1</property>
+                    <property name="text" translatable="1">ls -l</property>
+                    <signal name="changed" handler="on_anybasic_entry_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="right-attach">2</property>
+                    <property name="top-attach">1</property>
+                    <property name="bottom-attach">2</property>
+                    <property name="y-options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label27">
+                    <property name="label" translatable="1">Command:</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="top-attach">1</property>
+                    <property name="bottom-attach">2</property>
+                    <property name="x-options">GTK_FILL</property>
+                    <property name="y-options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="entry_title">
+                    <property name="focusable">1</property>
+                    <signal name="changed" handler="on_anybasic_entry_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="right-attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label7">
+                    <property name="label" translatable="1">Description:</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="x-options">GTK_FILL</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkComboBox" id="combo_output">
+                    <signal name="changed" handler="on_combo_output_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="right-attach">2</property>
+                    <property name="top-attach">2</property>
+                    <property name="bottom-attach">3</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label12">
+            <property name="valign">center</property>
+            <property name="label" translatable="1">&lt;big&gt;Time &amp;amp; Date&lt;/big&gt;</property>
+            <property name="use-markup">1</property>
+            <property name="xalign">0</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkTable" id="table6">
+            <property name="valign">center</property>
+            <property name="vexpand">1</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="n-rows">2</property>
+            <property name="n-columns">2</property>
+            <property name="column-spacing">6</property>
+            <property name="row-spacing">6</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <object class="GtkComboBox" id="frequency_combobox">
+                <signal name="changed" handler="on_frequency_combobox_changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="right-attach">2</property>
+                <property name="y-options">GTK_FILL</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="rb_advanced">
+                <property name="label" translatable="1">Advanced</property>
+                <property name="use-underline">1</property>
+                <property name="group">rb_basic</property>
+                <signal name="toggled" handler="on_rb_advanced_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="top-attach">1</property>
+                <property name="bottom-attach">2</property>
+                <property name="x-options">GTK_FILL</property>
+                <property name="y-options"></property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="rb_basic">
+                <property name="label" translatable="1">Basic</property>
+                <property name="use-underline">1</property>
+                <signal name="toggled" handler="on_rb_basic_toggled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="x-options">GTK_FILL</property>
+                <property name="y-options"></property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAlignment" id="alignment7">
+            <property name="vexpand">1</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="left-padding">24</property>
+            <child>
+              <object class="GtkTable" id="table5">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="n-rows">5</property>
+                <property name="n-columns">3</property>
+                <property name="column-spacing">6</property>
+                <property name="row-spacing">3</property>
+                <child>
+                  <object class="GtkEntry" id="minute_entry">
+                    <property name="focusable">1</property>
+                    <property name="text" translatable="1">0</property>
+                    <signal name="changed" handler="on_anyadvanced_entry_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="right-attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="hour_entry">
+                    <property name="focusable">1</property>
+                    <property name="text" translatable="1">*</property>
+                    <signal name="changed" handler="on_anyadvanced_entry_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="right-attach">2</property>
+                    <property name="top-attach">1</property>
+                    <property name="bottom-attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="day_entry">
+                    <property name="focusable">1</property>
+                    <property name="text" translatable="1">*</property>
+                    <signal name="changed" handler="on_anyadvanced_entry_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="right-attach">2</property>
+                    <property name="top-attach">2</property>
+                    <property name="bottom-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="month_entry">
+                    <property name="focusable">1</property>
+                    <property name="text" translatable="1">*</property>
+                    <signal name="changed" handler="on_anyadvanced_entry_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="right-attach">2</property>
+                    <property name="top-attach">3</property>
+                    <property name="bottom-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="weekday_entry">
+                    <property name="focusable">1</property>
+                    <property name="text" translatable="1">*</property>
+                    <signal name="changed" handler="on_anyadvanced_entry_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="right-attach">2</property>
+                    <property name="top-attach">4</property>
+                    <property name="bottom-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="help_weekday">
+                    <property name="label">gtk-edit</property>
+                    <property name="name">help_weekday</property>
+                    <property name="focusable">1</property>
+                    <property name="use-stock">True</property>
+                    <signal name="clicked" handler="on_help_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="right-attach">3</property>
+                    <property name="top-attach">4</property>
+                    <property name="bottom-attach">5</property>
+                    <property name="x-options"></property>
+                    <property name="y-options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="help_month">
+                    <property name="label">gtk-edit</property>
+                    <property name="name">help_month</property>
+                    <property name="focusable">1</property>
+                    <property name="use-stock">True</property>
+                    <signal name="clicked" handler="on_help_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="right-attach">3</property>
+                    <property name="top-attach">3</property>
+                    <property name="bottom-attach">4</property>
+                    <property name="x-options"></property>
+                    <property name="y-options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="help_day">
+                    <property name="label">gtk-edit</property>
+                    <property name="name">help_day</property>
+                    <property name="focusable">1</property>
+                    <property name="use-stock">True</property>
+                    <signal name="clicked" handler="on_help_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="right-attach">3</property>
+                    <property name="top-attach">2</property>
+                    <property name="bottom-attach">3</property>
+                    <property name="x-options"></property>
+                    <property name="y-options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="help_hour">
+                    <property name="label">gtk-edit</property>
+                    <property name="name">help_hour</property>
+                    <property name="focusable">1</property>
+                    <property name="use-stock">True</property>
+                    <signal name="clicked" handler="on_help_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="right-attach">3</property>
+                    <property name="top-attach">1</property>
+                    <property name="bottom-attach">2</property>
+                    <property name="x-options"></property>
+                    <property name="y-options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="help_minute">
+                    <property name="label">gtk-edit</property>
+                    <property name="name">help_minute</property>
+                    <property name="focusable">1</property>
+                    <property name="use-stock">True</property>
+                    <signal name="clicked" handler="on_help_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="right-attach">3</property>
+                    <property name="x-options"></property>
+                    <property name="y-options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label20">
+                    <property name="label" translatable="1">Day:</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="top-attach">2</property>
+                    <property name="bottom-attach">3</property>
+                    <property name="x-options">GTK_FILL</property>
+                    <property name="y-options"></property>
+                    <property name="x-padding">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label19">
+                    <property name="label" translatable="1">Hour:</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="top-attach">1</property>
+                    <property name="bottom-attach">2</property>
+                    <property name="x-options">GTK_FILL</property>
+                    <property name="y-options"></property>
+                    <property name="x-padding">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label18">
+                    <property name="label" translatable="1">Minute:</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="x-options">GTK_FILL</property>
+                    <property name="y-options"></property>
+                    <property name="x-padding">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label25">
+                    <property name="label" translatable="1">Month:</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="top-attach">3</property>
+                    <property name="bottom-attach">4</property>
+                    <property name="x-options">GTK_FILL</property>
+                    <property name="y-options"></property>
+                    <property name="x-padding">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label26">
+                    <property name="label" translatable="1">Weekday:</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="top-attach">4</property>
+                    <property name="bottom-attach">5</property>
+                    <property name="x-options">GTK_FILL</property>
+                    <property name="y-options"></property>
+                    <property name="x-padding">5</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label23">
+            <property name="vexpand">1</property>
+            <property name="label" translatable="1">&lt;big&gt;Preview&lt;/big&gt;</property>
+            <property name="use-markup">1</property>
+            <property name="xalign">0</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAlignment" id="alignment6">
+            <property name="valign">center</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="resize-mode">immediate</property>
+            <property name="left-padding">24</property>
+            <child>
+              <object class="GtkLabel" id="label_preview">
+                <property name="events">GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON2_MOTION_MASK | GDK_BUTTON3_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_FOCUS_CHANGE_MASK | GDK_STRUCTURE_MASK | GDK_PROPERTY_CHANGE_MASK | GDK_VISIBILITY_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK | GDK_PROXIMITY_OUT_MASK | GDK_SUBSTRUCTURE_MASK | GDK_SCROLL_MASK</property>
+                <property name="use-markup">1</property>
+                <property name="wrap">1</property>
+                <property name="wrap-mode">word-char</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAlignment" id="alignment8">
+            <property name="valign">center</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="xalign">1</property>
+            <property name="xscale">0</property>
+            <child>
+              <object class="GtkBox" id="hboxfoo">
+                <property name="can-focus">0</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkButton" id="button_template">
+                    <property name="halign">center</property>
+                    <property name="label" translatable="1">Add as template</property>
+                    <property name="focusable">1</property>
+                    <property name="can-default">True</property>
+                    <property name="use-underline">1</property>
+                    <signal name="clicked" handler="on_button_template_clicked" swapped="no"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_cancel">
+                    <property name="halign">center</property>
+                    <property name="label">gtk-cancel</property>
+                    <property name="focusable">1</property>
+                    <property name="can-default">True</property>
+                    <property name="use-stock">True</property>
+                    <signal name="clicked" handler="on_button_cancel_clicked" swapped="no"/>
+                    <accelerator key="Escape" signal="clicked"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_apply">
+                    <property name="halign">center</property>
+                    <property name="label">gtk-add</property>
+                    <property name="focusable">1</property>
+                    <property name="can-default">True</property>
+                    <property name="use-stock">True</property>
+                    <signal name="clicked" handler="on_button_apply_clicked" swapped="no"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+  <object class="GtkWindow" id="mainWindow">
+    <property name="visible">1</property>
+    <property name="title" translatable="1">Configure Scheduled Tasks</property>
+    <property name="default-width">700</property>
+    <property name="default-height">400</property>
+    <signal name="delete-event" handler="on_mainWindow_delete_event" swapped="no"/>
+    <signal name="window-state-event" handler="on_mainWindow_window_state_event" swapped="no"/>
+    <property name="child">
+      <object class="GtkBox" id="main_vbox">
+        <property name="orientation">vertical</property>
+        <property name="can-focus">0</property>
+        <child>
+          <object class="GtkBox" id="toolbar">
+            <property name="css-classes">toolbar</property>
+            <property name="can-focus">0</property>
+            <child>
+              <object class="GtkButton" id="prop_button">
+                <property name="can-focus">0</property>
+                <property name="tooltip-text" translatable="1">Edit a scheduled task</property>
+                <property name="is-important">True</property>
+                <property name="stock-id">gtk-edit</property>
+                <signal name="clicked" handler="on_prop_button_clicked" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="del_button">
+                <property name="can-focus">0</property>
+                <property name="tooltip-text" translatable="1">Delete a scheduled task</property>
+                <property name="is-important">True</property>
+                <property name="stock-id">gtk-delete</property>
+                <signal name="clicked" handler="on_del_button_clicked" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="run_button">
+                <property name="can-focus">0</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="tooltip-text" translatable="1">Run selected task</property>
+                <property name="is-important">True</property>
+                <property name="label" translatable="1">Run task</property>
+                <property name="stock-id">gtk-execute</property>
+                <signal name="clicked" handler="on_run_button_clicked" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToolItem" id="toolitem1">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkVSeparator" id="vseparator1">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_m_template">
+                <property name="can-focus">0</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="tooltip-text" translatable="1">Manage templates</property>
+                <property name="is-important">True</property>
+                <property name="label" translatable="1">Templates</property>
+                <signal name="clicked" handler="on_button_m_template_clicked" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="edit_mode_button">
+                <property name="can-focus">0</property>
+                <property name="tooltip-text" translatable="1">Change edit mode</property>
+                <property name="is-important">True</property>
+                <property name="label" translatable="1">Advanced</property>
+                <property name="use-underline">1</property>
+                <property name="stock-id">gtk-dialog-warning</property>
+                <signal name="clicked" handler="on_edit_mode_button_clicked" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btnSetUser">
+                <property name="can-focus">0</property>
+                <property name="tooltip-text" translatable="1">Choose the user whose tasks you want to modify</property>
+                <property name="is-important">True</property>
+                <property name="label" translatable="1">Change User</property>
+                <property name="use-underline">1</property>
+                <property name="stock-id">gtk-dialog-authentication</property>
+                <signal name="clicked" handler="on_btnSetUser_clicked" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="cmd_button">
+                <property name="can-focus">0</property>
+                <property name="tooltip-text" translatable="1">Select Terminal for executing task immediately</property>
+                <property name="is-important">True</property>
+                <property name="label" translatable="1">Set Terminal</property>
+                <property name="stock-id">gtk-preferences</property>
+                <signal name="clicked" handler="on_cmd_button_clicked" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="help_button">
+                <property name="visible">0</property>
+                <property name="can-focus">0</property>
+                <property name="tooltip-text" translatable="1">Show help</property>
+                <property name="stock-id">gtk-help</property>
+                <signal name="clicked" handler="on_help_button_clicked" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="about_button">
+                <property name="is-important">True</property>
+                <property name="can-focus">0</property>
+                <property name="tooltip-text" translatable="1">About Gnome-schedule</property>
+                <property name="stock-id">gtk-about</property>
+                <signal name="clicked" handler="on_about_menu_activate" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="main_scrolledwindow">
+            <property name="vexpand">1</property>
+            <property name="focusable">1</property>
+            <property name="child">
+              <object class="GtkTreeView" id="treeview">
+                <property name="focusable">1</property>
+                <property name="tooltip-text" translatable="1">Scheduled and active tasks</property>
+                <signal name="button-press-event" handler="on_treeview_button_press_event" swapped="no"/>
+                <signal name="key-press-event" handler="on_treeview_key_press_event" swapped="no"/>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkStatusbar" id="statusbar">
+            <property name="valign">center</property>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+  <object class="GtkWindow" id="template_manager">
+    <property name="width-request">500</property>
+    <property name="height-request">300</property>
+    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+    <property name="title" translatable="1">Manage templates</property>
+    <property name="modal">1</property>
+    <property name="skip-taskbar-hint">True</property>
+    <property name="skip-pager-hint">True</property>
+    <property name="transient-for">mainWindow</property>
+    <property name="child">
+      <object class="GtkBox" id="vbox2">
+        <property name="orientation">vertical</property>
+        <property name="can-focus">0</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <child>
+          <object class="GtkBox" id="toolbar1">
+            <property name="css-classes">toolbar</property>
+            <property name="can-focus">0</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <child>
+              <object class="GtkButton" id="tm_button_new">
+                <property name="can-focus">0</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="tooltip-text" translatable="1">Create a new template</property>
+                <property name="is-important">True</property>
+                <property name="stock-id">gtk-new</property>
+                <signal name="clicked" handler="on_tm_button_new_clicked" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="tm_button_edit">
+                <property name="can-focus">0</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="tooltip-text" translatable="1">Edit the selected template</property>
+                <property name="is-important">True</property>
+                <property name="stock-id">gtk-edit</property>
+                <signal name="clicked" handler="on_tm_button_edit_clicked" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="tm_button_delete">
+                <property name="can-focus">0</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="tooltip-text" translatable="1">Delete the selected template</property>
+                <property name="is-important">True</property>
+                <property name="stock-id">gtk-delete</property>
+                <signal name="clicked" handler="on_tm_button_delete_clicked" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="scrolledwindow3">
+            <property name="vexpand">1</property>
+            <property name="focusable">1</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="child">
+              <object class="GtkTreeView" id="tm_treeview">
+                <property name="focusable">1</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <signal name="button-press-event" handler="on_tm_treeview_button_press_event" swapped="no"/>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkHButtonBox" id="tm_hbuttonbox">
+            <property name="valign">center</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="border-width">5</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkButton" id="tm_button_cancel">
+                <property name="label">gtk-close</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="use-stock">True</property>
+                <signal name="clicked" handler="on_tm_button_cancel_clicked" swapped="no"/>
+                <accelerator key="Escape" signal="clicked"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="tm_button_use">
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="tooltip-text" translatable="1">Create a new task from the selected template</property>
+                <signal name="clicked" handler="on_tm_button_use_clicked" swapped="no"/>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+  <object class="GtkWindow" id="template_chooser">
+    <property name="width-request">450</property>
+    <property name="height-request">300</property>
+    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+    <property name="title" translatable="1">Choose template</property>
+    <property name="modal">1</property>
+    <property name="skip-taskbar-hint">True</property>
+    <property name="skip-pager-hint">True</property>
+    <property name="transient-for">template_manager</property>
+    <property name="child">
+      <object class="GtkBox" id="vbox4">
+        <property name="orientation">vertical</property>
+        <property name="can-focus">0</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <child>
+          <object class="GtkBox" id="hbox9">
+            <property name="vexpand">1</property>
+            <property name="can-focus">0</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolledwindow5">
+                <property name="hexpand">1</property>
+                <property name="focusable">1</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="child">
+                  <object class="GtkTreeView" id="tc_treeview">
+                    <property name="focusable">1</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <signal name="button-press-event" handler="on_tc_treeview_button_press_event" swapped="no"/>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection"/>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkHButtonBox" id="hbuttonbox5">
+            <property name="valign">center</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="border-width">5</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkButton" id="tc_button_cancel">
+                <property name="label">gtk-close</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="use-stock">True</property>
+                <signal name="clicked" handler="on_tc_button_cancel_clicked" swapped="no"/>
+                <accelerator key="Escape" signal="clicked"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="tc_button_use">
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="tooltip-text" translatable="1">Create a new task from the selected template</property>
+                <signal name="clicked" handler="on_tc_button_use_clicked" swapped="no"/>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+  <object class="GtkDialog" id="setcmdWindow">
+    <property name="title" translatable="1">Set Terminal</property>
+    <property name="resizable">0</property>
+    <property name="modal">1</property>
+    <property name="window-position">center-on-parent</property>
+    <property name="type-hint">dialog</property>
+    <child internal-child="content_area">
+      <object class="GtkBox" id="setcmd_dialog_vbox">
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkBox" id="setcmd_hbox">
+            <property name="can-focus">0</property>
+            <property name="border-width">12</property>
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkImage" id="setcmd_image">
+                <property name="hexpand">1</property>
+                <property name="yalign">0</property>
+                <property name="stock">gtk-execute</property>
+                <property name="icon_size">6</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="setcmd_vbox">
+                <property name="hexpand">1</property>
+                <property name="orientation">vertical</property>
+                <property name="can-focus">0</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="setcmd_label">
+                    <property name="valign">center</property>
+                    <property name="label" translatable="1">&lt;b&gt;Choose the terminal to use for running task immediately&lt;/b&gt;</property>
+                    <property name="use-markup">1</property>
+                    <property name="xalign">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkAlignment" id="alignment_1">
+                    <property name="vexpand">1</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="left-padding">12</property>
+                    <child>
+                      <object class="GtkBox" id="setcmd_combobox_hbox">
+                        <property name="can-focus">0</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkLabel" id="setcmd_combobox_label">
+                            <property name="halign">center</property>
+                            <property name="label" translatable="1">_Terminal:</property>
+                            <property name="use-underline">1</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="setcmd_combobox_vbox">
+                            <property name="hexpand">1</property>
+                            <property name="orientation">vertical</property>
+                            <property name="can-focus">0</property>
+                            <property name="homogeneous">1</property>
+                            <child>
+                              <object class="GtkEntry" id="entCmd">
+                                <property name="valign">center</property>
+                                <property name="focusable">1</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">setcmd_cancel_button</action-widget>
+      <action-widget response="-5">setcmd_ok_button</action-widget>
+    </action-widgets>
+    <child internal-child="action_area">
+      <object class="GtkButtonBox" id="setcmd_dialog_action_area">
+        <property name="halign">center</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="layout-style">end</property>
+        <child>
+          <object class="GtkButton" id="setcmd_cancel_button">
+            <property name="label">gtk-cancel</property>
+            <property name="focusable">1</property>
+            <property name="can-default">True</property>
+            <property name="use-stock">True</property>
+            <signal name="clicked" handler="on_setcmd_cancel_button_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="setcmd_ok_button">
+            <property name="label">gtk-ok</property>
+            <property name="focusable">1</property>
+            <property name="can-default">True</property>
+            <property name="use-stock">True</property>
+            <signal name="clicked" handler="on_setcmd_ok_button_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkDialog" id="setuserWindow">
+    <property name="title" translatable="1">Change User</property>
+    <property name="resizable">0</property>
+    <property name="modal">1</property>
+    <property name="window-position">center-on-parent</property>
+    <property name="type-hint">dialog</property>
+    <child internal-child="content_area">
+      <object class="GtkBox" id="setuser_dialog_vbox">
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkBox" id="setuser_hbox">
+            <property name="can-focus">0</property>
+            <property name="border-width">12</property>
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkImage" id="setuser_image">
+                <property name="hexpand">1</property>
+                <property name="yalign">0</property>
+                <property name="stock">gtk-dialog-authentication</property>
+                <property name="icon_size">6</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="setuser_vbox">
+                <property name="hexpand">1</property>
+                <property name="orientation">vertical</property>
+                <property name="can-focus">0</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="setuser_label">
+                    <property name="valign">center</property>
+                    <property name="label" translatable="1">&lt;b&gt;Choose the user whose tasks you want to modify&lt;/b&gt;</property>
+                    <property name="use-markup">1</property>
+                    <property name="xalign">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkAlignment" id="alignment5">
+                    <property name="vexpand">1</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="left-padding">12</property>
+                    <child>
+                      <object class="GtkBox" id="setuser_combobox_hbox">
+                        <property name="can-focus">0</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkLabel" id="setuser_combobox_label">
+                            <property name="halign">center</property>
+                            <property name="label" translatable="1">_Terminal:</property>
+                            <property name="use-underline">1</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="setuser_combobox_vbox">
+                            <property name="hexpand">1</property>
+                            <property name="orientation">vertical</property>
+                            <property name="can-focus">0</property>
+                            <property name="homogeneous">1</property>
+                            <child>
+                              <object class="GtkComboBox" id="entUser">
+                                <property name="valign">center</property>
+                                <property name="has-entry">1</property>
+                                <property name="child">
+                                  <object class="GtkEntry" id="listUser">
+                                    <property name="visible">0</property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">setuser_cancel_button</action-widget>
+      <action-widget response="-5">setuser_ok_button</action-widget>
+    </action-widgets>
+    <child internal-child="action_area">
+      <object class="GtkButtonBox" id="setuser_dialog_action_area">
+        <property name="halign">center</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="layout-style">end</property>
+        <child>
+          <object class="GtkButton" id="setuser_cancel_button">
+            <property name="label">gtk-cancel</property>
+            <property name="focusable">1</property>
+            <property name="can-default">True</property>
+            <property name="use-stock">True</property>
+            <signal name="clicked" handler="on_setuser_cancel_button_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="setuser_ok_button">
+            <property name="label">gtk-ok</property>
+            <property name="focusable">1</property>
+            <property name="can-default">True</property>
+            <property name="use-stock">True</property>
+            <signal name="clicked" handler="on_setuser_ok_button_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
