@@ -1,10 +1,11 @@
-# GNOME Task Scheduler (Community Edition)
+# gTock: the fork of GNOME Task Scheduler
 
-This is the GTK+3 and Python 3.x port of GNOME Schedule for managing crontabs and at tasks
+This is the fork of GNOME Schedule for managing crontabs and at tasks
+
+It is the GTK+3 and Python 3.x port
 
 See https://gnome-schedule.sourceforge.net/ for more details
 
-Note: Due to the big difference between GTK+3, Python 3, and DConf compared to GTK+2, Python 2, and GConf. Its configuration was not backward compatible with GNOME Schedule 2.x
 
 Known issues:
 * DateTime spinners on AT editor does not work. Unable to adjust date and time manually
