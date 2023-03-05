@@ -1,8 +1,8 @@
 # gTock: the fork of GNOME Task Scheduler
 
-This is the fork of GNOME Schedule for managing crontabs and at tasks
+This is the fork of GNOME Schedule for managing crontabs and at tasks with some overhaul and improvements
 
-It was ported to GTK+3 and Python 3.x
+It was ported to GTK+3 (GTK4 experimental) and Python 3.x
 
 See https://gnome-schedule.sourceforge.net/ for more details
 
