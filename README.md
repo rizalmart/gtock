@@ -8,4 +8,4 @@ See https://gnome-schedule.sourceforge.net/ for more details
 
 
 Known issues:
-* DateTime spinners on AT editor does not work. Unable to adjust date and time manually
+* GTK 4.x mode will not work for now due to conversion of problem of Glade file to GTK4
