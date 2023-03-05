@@ -41,6 +41,8 @@ import configparser
 class Crontab:
     def __init__(self,root,user,uid,gid, user_home_dir):
 		
+        settings = Gio.Settings.new(config.getDconfPath())
+		
         #default preview length
         self.preview_len = 50
         self.root = root
@@ -348,9 +350,9 @@ class Crontab:
         if desc == None:
             desc = ""
   
-        settings = Gio.Settings.new("org.gtk.gtock")
+        
             
-        r=settings.get_int("at-last-id")
+        r=self.settings.get_int("crontab-last-id")
         
         if r == 0:
            last_id = 1
@@ -359,7 +361,7 @@ class Crontab:
 
         job_id = last_id + 1
             
-        settings.set_int("at-last-id",job_id)
+        self.settings.set_int("crontab-last-id",job_id)
 
         record = command
         display = "0"

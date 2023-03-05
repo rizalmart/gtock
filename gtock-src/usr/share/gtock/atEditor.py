@@ -288,8 +288,9 @@ class AtEditor:
         self.window.set_transient_for(transient)
         self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
         self.__setup_calendar__ ()
-        self.button_add_template.show()
-        self.window.show_all()
+        
+        self.window.show()
+        self.button_add_template.hide()
 
 
 

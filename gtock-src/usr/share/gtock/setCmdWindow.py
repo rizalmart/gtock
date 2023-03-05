@@ -34,7 +34,7 @@ class SetcmdWindow:
         self.ParentClass = parent
         self.builder = self.ParentClass.builder
         
-        self.settings = Gio.Settings.new("org.gtk.gtock")
+        self.settings = parent.settings
         
         self.window = self.builder.get_object("setcmdWindow")
         self.window.connect("delete-event", self.on_close_button_clicked)

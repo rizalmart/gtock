@@ -19,9 +19,15 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-version = "3.0.0"
+#################
 
 gtk_version="3.0"
+
+app_version = "3.0.0"
+
+dconf_path= "org.gtk.gtock"
+
+#################
 
 image_dir = "/usr/share/gtock/pixmaps"
 gs_dir = "/usr/share/gtock"
@@ -36,7 +42,13 @@ batchbin = "/usr/bin/batch"
 subin = "/bin/su"
 prefix = "/usr"
 
+
+
+
 import os
+
+def getDconfPath():
+	return dconf_path
 
 def getGtkVersion():
 	return gtk_version
@@ -66,7 +78,7 @@ def getCrontabbin ():
 	return crontabbin
 
 def getVersion ():
-	return version
+	return app_version
 
 def getImagedir ():
 	return image_dir

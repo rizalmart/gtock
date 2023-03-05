@@ -40,7 +40,7 @@ class Template:
 		self.parent = parent
 #		self.configbackend = configbackend
 
-		self.settings = Gio.Settings.new("org.gtk.gtock")
+		self.settings = self.parent.settings
 
 
 

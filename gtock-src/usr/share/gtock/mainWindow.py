@@ -79,7 +79,7 @@ class main:
         
         self.gtk_version=config.getGtkVersion()
         
-        self.settings = Gio.Settings.new("org.gtk.gtock")
+        self.settings = Gio.Settings.new(config.getDconfPath())
 
         self.__loadIcon__()
         #self.__loadGlade__()
@@ -104,7 +104,7 @@ class main:
 
         builder1 = Gtk.Builder()
         
-        if self.gtk_version == "4.0":
+        if self.gtk_version == 4:
           builder1.add_from_file(config.getGladedir() + "/gtock-gtk4.glade")
         else:
           builder1.add_from_file(config.getGladedir() + "/gtock-gtk3.glade")

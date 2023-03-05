@@ -34,10 +34,8 @@ class ConfigBackend:
 		self.parent = parent
 		self.type = "dconf"
 
-		settings = Gio.Settings.new("org.gtk.gtock")
+		self.settings = parent.settings
 
-		self.settings=settings
-		
 		
 	def get_not_inform_working_dir(self):
 		if((self.get_not_inform_working_dir_crontab() and self.get_not_inform_working_dir_at()) or self.settings.get_boolean("inform-working-dir")):

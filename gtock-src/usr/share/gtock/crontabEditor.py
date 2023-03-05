@@ -237,6 +237,8 @@ class CrontabEditor:
         self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
         self.window.show ()
         self.button_template.hide ()
+        
+        
         i = self.__getfrequency__ (self.minute, self.hour, self.day, self.month, self.weekday, self.special)
         if i == -1:
             # advanced
@@ -289,7 +291,7 @@ class CrontabEditor:
         self.parentiter = iter
         self.window.set_transient_for(transient)
         self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
-        self.button_template.show ()
+        self.button_template.hide()
         self.window.show ()
         i = self.__getfrequency__ (self.minute, self.hour, self.day, self.month, self.weekday, self.special)
         if i == -1:
@@ -557,10 +559,11 @@ class CrontabEditor:
 
             self.window.hide ()
             self.ParentClass.template_manager.reload_tv()
+            self.ParentClass.template_manager.window.show()
             
             return
 
-        self.ParentClass.schedule_reload()
+            self.ParentClass.schedule_reload()
         
         if self.mode == 2:
           self.ParentClass.template_manager.window.show()		
