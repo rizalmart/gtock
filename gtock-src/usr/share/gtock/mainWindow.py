@@ -104,7 +104,7 @@ class main:
 
         builder1 = Gtk.Builder()
         
-        if self.gtk_version == 4:
+        if self.gtk_version == "4.0":
           builder1.add_from_file(config.getGladedir() + "/gtock-gtk4.glade")
         else:
           builder1.add_from_file(config.getGladedir() + "/gtock-gtk3.glade")
