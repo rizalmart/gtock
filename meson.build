@@ -1,4 +1,4 @@
-project('gtock', 'c')
+project('gtock', 'python')
 
 usr_files = files('gtock-src/usr/**')
 
