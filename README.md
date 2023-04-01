@@ -8,7 +8,7 @@ It was ported to GTK+3 (GTK4 experimental) and Python 3.x
 
 ## Installation (for now)
 * Just copy the contents of gtock-src to /
-* Run the following command
+* On terminal, type this command then press enter: 
 `glib-compile-schemas /usr/share/glib-2.0/schemas/`
 
 
