@@ -15,5 +15,5 @@ It was ported to GTK+3 (GTK4 experimental) and Python 3.x
 * Set gtk_version variable (at line 24) to "4.0" and save it
 * Convert the glade file /usr/share/gtock/assets/gtock-gtk3.glade into GTK4 version and save it as /usr/share/gtock/assets/gtock-gtk4.glade
 
-##Need Meson build file pull request
+## Need Meson build file pull request
 * Since I was very newbie in meson, just send a Pull Request for meson build file. The build file must set to just to copy the contents of gtock-src to /usr folder and run glib-compile-schemas (the current meson build file was total failure)
