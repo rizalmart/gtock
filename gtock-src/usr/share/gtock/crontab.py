@@ -352,7 +352,7 @@ class Crontab:
   
         
             
-        r=self.settings.get_int("crontab-last-id")
+        r=self.settings.get_int("cron-last-id")
         
         if r == 0:
            last_id = 1
@@ -361,7 +361,7 @@ class Crontab:
 
         job_id = last_id + 1
             
-        self.settings.set_int("crontab-last-id",job_id)
+        self.settings.set_int("cron-last-id",job_id)
 
         record = command
         display = "0"
