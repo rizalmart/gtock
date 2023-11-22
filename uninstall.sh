@@ -25,8 +25,6 @@ else
 fi
 
 
-script_dir=$(realpath $(dirname "$0"))
-
 for rfile in gtock gtock-import gtock-export
 do
  rm -f /usr/bin/${rfile}
