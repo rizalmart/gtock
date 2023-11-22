@@ -7,10 +7,7 @@ This is the fork of GNOME Schedule for managing crontabs and at tasks with some 
 It was ported to GTK+3 (GTK4 experimental) and Python 3.x
 
 ## Installation (for now; requires root access)
-* Just copy the contents inside the gtock-src folder to root folder ("/")
-* On terminal, type this command then press enter: 
-`glib-compile-schemas /usr/share/glib-2.0/schemas/`
-
+* Just run install.sh script
 
 ## Known issues:
 * GTK4 mode will not work for now due to conversion of problem of Glade file to GTK4
