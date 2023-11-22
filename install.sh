@@ -1,5 +1,5 @@
 #!/bin/bash
-#gTock script installer.
+#gTock installer script.
 
 if [ "$(whoami)" != "root" ]; then
  exec sudo $0
