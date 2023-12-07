@@ -50,7 +50,7 @@ def check_X (display, xauth):
         from gi.repository import Gtk
 
     except:
-        print("You need to install pyGTK or GTKv2,\n"
+        print("You need to install pygobject or GTK+3,\n"
                 "or set your PYTHONPATH correctly.\n"
                 "try: export PYTHONPATH= ")
         sys.exit(1)
