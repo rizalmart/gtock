@@ -83,7 +83,21 @@ class At:
         self.SCRIPT_DELIMITER = "###### ---- GNOME_SCHEDULE_SCRIPT_DELIMITER #####"
 
         self.DISPLAY = "DISPLAY=%s; export DISPLAY;\n"
-        self.DISPLAY = self.DISPLAY + "XAUTHORITY=" + user_home_dir + "/.Xauthority; export XAUTHORITY;\n"
+        self.DISPLAY = self.DISPLAY + "WAYLAND_DISPLAY=<wayland value>; export WAYLAND_DISPLAY;\n"
+        
+        xauthfile = user_home_dir + "/.Xauthority"	
+        
+        if os.path.isfile(xauthfile)==False:
+           xauthfile = user_home_dir + "/.config/Xauthority"	
+
+        if os.path.isfile(xauthfile)==False:
+           xauthfile = user_home_dir + "/.config/X11/Xauthority"	
+
+        if os.path.isfile(xauthfile)==False:
+           xauthfile = user_home_dir + "/.config/xorg/Xauthority"			
+		
+			
+        self.DISPLAY = self.DISPLAY + "XAUTHORITY=" + xauthfile + "; export XAUTHORITY;\n"			
         self.DISPLAY = self.DISPLAY + config.xwrapper_exec + " a\n"
         self.DISPLAY = self.DISPLAY + """
 xwrapper=$?;
@@ -219,7 +233,7 @@ fi
         # TODO: throw exception
 
     def get_job_data (self, job_id):
-        f = os.path.join (self.atdata, str (job_id)) + ".at"
+        f = os.path.join (self.atdata, str (job_id)) + ".gsat"
         if os.access (f, os.R_OK):
             fh = open (f, 'r')
             d = fh.read ()
@@ -280,8 +294,9 @@ fi
             return False, "", "", False, 0, "", False
 
     def write_job_data (self, job_id, title, desc, output, display):
+		
         # Create and write data file
-        f = os.path.join (self.atdata, str(job_id)) + ".at"
+        f = os.path.join (self.atdata, str(job_id)) + ".gsat"
         fh = open (f, 'w')
         fh.truncate (1)
         fh.seek (0)
@@ -422,20 +437,34 @@ fi
 
         return True, "ok"
 
-
     def append (self, runat, command, title, output):
         tmpfile = tempfile.mkstemp ()
         fd, path = tmpfile
         tmp = os.fdopen(fd, 'w')
         tmp.write (self.SCRIPT_DELIMITER + "\n")
         tmp.write (self.PREPEND_SCRIPT)
+        
         if self.manual_poscorrect:
             tmp.write (self.POSIXLY_CORRECT_UNSET)
 
         display = ""
+        wayland_display = ""
+        
         if output > 0:
+			
             display = os.getenv ('DISPLAY')
-            tmp.write (self.DISPLAY %  display )
+            wayland_display = os.getenv ('WAYLAND_DISPLAY')
+
+            if display==None:
+               display = ""                 
+            
+            if wayland_display==None:
+               wayland_display = ""      
+            
+            display_header = self.DISPLAY % display
+            display_header = display_header.replace("<wayland value>",wayland_display)
+            
+            tmp.write (display_header)
 
         tmp.write (command + "\n")
         tmp.close ()
@@ -469,13 +498,14 @@ fi
 
         os.unlink (path)
 
-
     def update (self, job_id, runat, command, title, output):
         #print "update" + str (job_id) + runat + command + title
         #remove old
-        f = os.path.join (self.atdata, str (job_id)) + ".at"
+        f = os.path.join (self.atdata, str (job_id)) + ".gsat"
+        
         if os.access (f, os.F_OK):
             os.unlink (f)
+       
         execute = config.getAtrmbin()+ " " + str(job_id)
         subprocess.getoutput(execute)
 
@@ -486,13 +516,26 @@ fi
 
         tmp.write (self.SCRIPT_DELIMITER + "\n")
         tmp.write (self.PREPEND_SCRIPT)
+        
         if self.manual_poscorrect:
             tmp.write (self.POSIXLY_CORRECT_UNSET)
 
         display = ""
+        
         if output > 0:
             display = os.getenv ('DISPLAY')
-            tmp.write (self.DISPLAY %  display )
+            wayland_display = os.getenv ('WAYLAND_DISPLAY')
+            
+            if display==None:
+              display=""				
+
+            if wayland_display==None:
+              wayland_display=""	            
+ 
+            display_header = self.DISPLAY % display           
+            display_header = display_header.replace("<wayland value>",wayland_display)
+                
+            tmp.write (display_header)
 
         tmp.write (command + "\n")
         tmp.close ()
@@ -512,6 +555,7 @@ fi
 
         err = child_stderr.readlines ()
         job_id = 0
+        
         for line in err:
             t = self.parse (line, False)
             if t != False:
@@ -526,9 +570,10 @@ fi
 
 
     def delete (self, job_id, iter):
+		
         if job_id:
             # delete file
-            f = os.path.join (self.atdata, str(job_id)) + ".at"
+            f = os.path.join (self.atdata, str(job_id)) + ".gsat"
             if os.access(f, os.F_OK):
                 os.unlink (f)
             execute = config.getAtrmbin()+ " " + str(job_id)
@@ -627,8 +672,10 @@ fi
             start = start + string_len
             script = script[start:]
             prelen = 0
+            
             # If the string contains TITLE=
             titlestart = script.find ("TITLE=")
+            
             if titlestart != -1:
                 titleend = script.find("\n", titlestart)
                 title = script[(titlestart + 6):titleend]
@@ -636,6 +683,7 @@ fi
                 prelen = len(title) + 7
             else:
                 title = _("Untitled")
+                
             # If the string contains ICON=
             iconstart = script.find ("ICON=")
             if iconstart != -1:
@@ -663,6 +711,7 @@ fi
 
         result = result.replace("\n",";")
         result = result.replace ("&", "&amp;")
+        
         #remove ending newlines, not if result len = 0
         result = result.strip ()
 

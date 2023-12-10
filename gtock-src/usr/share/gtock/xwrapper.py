@@ -32,11 +32,14 @@ import crontab
 ## I18N
 ##
 import gettext
-gettext.install(config.GETTEXT_PACKAGE(), config.GNOMELOCALEDIR(), unicode=1)
+import locale
 
-def check_X (display, xauth):
+from locale import gettext as _ 
+
+def check_X (display, wayland_display, xauth):
     # Checking if I can use X
     os.environ['DISPLAY'] = display
+    os.environ['WAYLAND_DISPLAY'] = wayland_display
     os.environ['XAUTHORITY'] = xauth
 
     try:
@@ -50,7 +53,7 @@ def check_X (display, xauth):
         from gi.repository import Gtk
 
     except:
-        print("You need to install pygobject or GTK+3,\n"
+        print("You need to install pygobject or GTK3,\n"
                 "or set your PYTHONPATH correctly.\n"
                 "try: export PYTHONPATH= ")
         sys.exit(1)
@@ -59,12 +62,13 @@ def check_X (display, xauth):
         Gtk.init_check()
 
     except Exception as e:
-        print("Could not open a connection to X!")
-        print e
+        print("Could not open a connection to X or Wayland Compositor!")
+        print(e)
         sys.exit (1)
 
 poscorrect_isset = os.getenv ("POSIXLY_CORRECT", False)
 manual_poscorrect = False
+
 if poscorrect_isset == False:
     os.environ["POSIXLY_CORRECT"] = "enabled"
     manual_poscorrect = True
@@ -94,6 +98,7 @@ gid = os.getegid ()
 user = pwd.getpwuid (uid)[0]
 home_dir = pwd.getpwuid (uid)[5]
 user_shell = pwd.getpwuid (uid)[6]
+
 if uid == 0:
     is_root = True
 else:
@@ -123,23 +128,39 @@ if job_type == 0:
         print("Data file too old. Recreate task.")
         sys.exit (1)
 
-
     print("Launching %s.." % title)
+    
     if (output < 2):
-        print("output<2: Why am I launched?")
-        sys.exit (1)
-    if (len (display) < 2):
-        print("len(display)<2: No proper DISPLAY variable")
+        print("output<2 : Why am I launched?")
         sys.exit (1)
 
     # TODO: Can/Does this change ?
-    xauth = home_dir + "/.Xauthority"
+    xauth = home_dir + "/.config/Xauthority"
+    
+    if os.path.isfile(xauth)==False:
+      xauth = home_dir + "/.config/X11/Xauthority"	
 
-    check_X (display, xauth)
+    if os.path.isfile(xauth)==False:
+     xauth = home_dir + "/.config/xorg/Xauthority"	
+
+    if os.path.isfile(xauth)==False:
+      xauth = home_dir + "/.Xauthority"	
+
+    display = os.getenv ('DISPLAY')
+    wayland_display = os.getenv('WAYLAND_DISPLAY')
+
+    if display==None:
+       display=""
+    
+    if wayland_display==None:
+       wayland_display=""
+    
+    check_X (display, wayland_display, xauth)
 
     # Execute task
     sh = os.popen ("/bin/sh -s", 'w')
     sh.write ("export DISPLAY=" + display + "\n")
+    sh.write ("export WAYLAND_DISPLAY=" + wayland_display + "\n")
     sh.write ("export XAUTHORITY=" + xauth + "\n")
     sh.write (command + "\n")
     sh.close ()
@@ -148,9 +169,28 @@ if job_type == 0:
 
 # AT
 elif (job_type == 1):
+	
     display = os.getenv ('DISPLAY')
+    wayland_display = os.getenv ('WAYLAND_DISPLAY')
+
+    if display==None:
+       display=""
+    
+    if wayland_display==None:
+       wayland_display=""
+    
     xauth = home_dir + "/.Xauthority"
-    check_X (display, xauth)
+         
+    if os.path.isfile(xauth)==False:
+      xauth = home_dir + "/.config/Xauthority"	
+
+    if os.path.isfile(xauth)==False:
+      xauth = home_dir + "/.config/X11/Xauthority"	
+
+    if os.path.isfile(xauth)==False:
+      xauth = home_dir + "/.config/xorg/Xauthority"		
+    
+    check_X (display, wayland_display, xauth)
     sys.exit (0) # All fine
 
 else:

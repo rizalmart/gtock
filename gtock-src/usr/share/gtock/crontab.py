@@ -41,7 +41,7 @@ import configparser
 class Crontab:
     def __init__(self,root,user,uid,gid, user_home_dir):
 		
-        settings = Gio.Settings.new(config.getDconfPath())
+        self.settings = Gio.Settings.new(config.getDconfPath())
 		
         #default preview length
         self.preview_len = 50
@@ -285,6 +285,10 @@ class Crontab:
             record = record + space + self.output[1]
         elif (output == 2) or (output == 3):
             display = os.getenv ('DISPLAY')
+            
+            if display==None:
+               display="0"
+
             record = config.xwrapper_exec + " c " + str(job_id)
             if output == 3:
                 record = record + " " + self.output [3]
@@ -299,7 +303,7 @@ class Crontab:
         if title == None:
             title = _("Untitled")
 
-        f = os.path.join (self.crontabdata, str(job_id)) + ".info"
+        f = os.path.join (self.crontabdata, str(job_id)) + ".gsct"
         #print f
         fh = open (f, 'w')
         fh.truncate(1)
@@ -323,7 +327,7 @@ class Crontab:
 
     def delete (self, linenumber, iter, job_id):
         # delete file
-        f = os.path.join (self.crontabdata, job_id) + ".info"
+        f = os.path.join (self.crontabdata, job_id) + ".gsct"
         if os.access(f, os.F_OK):
             os.unlink (f)
 
@@ -373,6 +377,10 @@ class Crontab:
             record = record + space + self.output[1]
         elif (output == 2) or (output == 3):
             display = os.getenv ('DISPLAY')
+            
+            if display==None:
+               display="0"								
+            
             record = config.xwrapper_exec + " c " + str (job_id)
             if output == 3:
                 record = record + " " + self.output [3]
@@ -386,7 +394,7 @@ class Crontab:
 
         self.lines.append (record)
 
-        f = os.path.join (self.crontabdata, str(job_id)) + ".info"
+        f = os.path.join (self.crontabdata, str(job_id)) + ".gsct"
         fh = open (f, 'w')
         fh.truncate (1)
         fh.seek (0)
@@ -650,7 +658,7 @@ class Crontab:
             return minute, hour, dom, moy, dow, command
 
     def get_job_data (self, job_id):
-        f = os.path.join (self.crontabdata, str (job_id)) + ".info"
+        f = os.path.join (self.crontabdata, str (job_id)) + ".gsct"
         if os.access (f, os.R_OK):
             fh = open (f, 'r')
             d = fh.read ()

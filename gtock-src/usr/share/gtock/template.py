@@ -244,6 +244,6 @@ class Template:
 		s = "<b>" + _("Title:") + "</b> " + title + "\n<b>" + _("Run:") + "</b> " + timeexpression + "\n<b>" + _("Command:") + "</b> " + command
 
 		if int(output) > 0:
-			s = (s + " <i>(%s)</i>") % (str (self.parent.output_strings[output]))
+			s = (s + " <i>(%s)</i>") % (str (self.parent.output_strings[int(output)]))
 
 		return s
