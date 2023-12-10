@@ -18,6 +18,10 @@ foreach file: files_to_install
   # Create the install target
   install_targets += install_data(file, install_dir: target_path)
 
+# Add all install targets to the installation script
+foreach target: install_targets
+  add_install_script(target)
+
 run_command('/usr/share/glib-2.0/schemas/glib-compile-schemas', 
     dependencies : [find_program('glib-compile-schemas')],
     capture : true)
