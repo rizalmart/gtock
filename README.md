@@ -9,6 +9,9 @@ It was ported to GTK+3 (GTK4 experimental) and Python 3.x
 ## Installation (for now; requires root access)
 * Just run install.sh script
 
+## Alternative installation option
+* Use meson (experimental)
+
 ## Known issues:
 * GTK4 mode will not work for now due to conversion of problem of Glade file to GTK4
 
