@@ -139,7 +139,7 @@ class AtEditor:
         self.spin_month.set_adjustment(Gtk.Adjustment(month, 1, 12, step_increment=1, page_increment=1, page_size=0))
         
         if month == 2:
-          if self.is_leap_year(year)==True:	
+          if self.is_leap_year(year)==True:
            end_day=29
           else:
            end_day=28   
@@ -155,7 +155,7 @@ class AtEditor:
         
         self.timeout_handler_id = GObject.timeout_add(60 * 1000, self.__check_spins__)
         
-    def is_leap_year(year):
+    def is_leap_year(self, year):
       if year % 4 == 0:
         if year % 100 == 0:
             if year % 400 == 0:
