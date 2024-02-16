@@ -609,7 +609,7 @@ class Crontab:
 
         command = line.strip ()
 
-        # Retrive jobid
+        # Retrieve jobid
         i = comment.find ('JOB_ID_')
         if (i != -1):
             job_id = int (comment[i + 7:].rstrip ())
