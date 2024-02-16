@@ -36,5 +36,6 @@ cp -rf $script_dir/gtock-src/* /
 
 glib-compile-schemas /usr/share/glib-2.0/schemas/
 
+sudo chmod +x /usr/bin/gtock
 echo "gTock installation complete!"
 
