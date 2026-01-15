@@ -1,27 +1,32 @@
-project('gtock', 'c')
+project('gtock', 'c', version: '1.0')
 
-# Define your source and destination directories
+# 1. Define the source directory
+# Meson usually expects sources to be relative to the build file
 source_dir = 'gtock-src'
-install_dir = get_option('prefix') / 
 
-# Get a list of all files in the source directory
-files_to_install = files(glob(join_paths(source_dir, '*')))
+# 2. Check if the directory exists (Logic check)
+fs = import('fs')
+if not fs.is_dir(source_dir)
+  error('gtock source files are missing')
+endif
 
-# Loop through the files and create install targets
-install_targets = []
+# 3. Install files (Replaces 'cp -rf')
+# Instead of a bulk copy, we define where specific folders/files go
+install_subdir(source_dir,
+  install_dir: get_option('prefix'),
+  strip_directory: true
+)
 
-foreach file: files_to_install
+# 4. Compile schemas (Replaces the glib-compile-schemas logic)
+# Meson has a built-in module for GLib tasks
+gnome = import('gnome')
+gnome.compile_schemas(
+  depend_files: files('/usr/share/glib-2.0/schemas/org.gtk.gtock.gschema.xml') 
+)
 
-  # Define the install target path by preserving the relative directory structure
-  target_path = join_paths(install_dir, file.relative_path())
-  
-  # Create the install target
-  install_targets += install_data(file, install_dir: target_path)
-
-# Add all install targets to the installation script
-foreach target: install_targets
-  add_install_script(target)
-
-run_command('/usr/share/glib-2.0/schemas/glib-compile-schemas', 
-    dependencies : [find_program('glib-compile-schemas')],
-    capture : true)
+# 5. Set permissions (Replaces 'chmod +x')
+# We do this during the install_data or install_exe phase
+install_data(source_dir / 'usr/bin/gtock',
+  install_dir: prefix_path / 'usr/bin',
+  install_mode: 'rwxr-xr-x'
+)
