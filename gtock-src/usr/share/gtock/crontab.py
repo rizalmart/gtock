@@ -36,6 +36,7 @@ import locale
 from locale import gettext as _
 
 import configparser
+import subprocess
 
 
 class Crontab:
@@ -433,47 +434,52 @@ class Crontab:
 
     #read tasks in crontab
     def read (self, easy = True):
-		
-     if config.cronTabInstalled()==False:
-        return
-     else:	
+        if not config.cronTabInstalled():
+            self.lines = []
+            return []
 
         data = []
+        command = config.getCrontabCommand()
+        if not command:
+            self.lines = []
+            return []
 
+        args = list(command)
         if self.root:
-            execute = config.getCrontabbin () + " -l -u " + self.user
+            args.extend(["-u", self.user, "-l"])
         else:
-            execute = config.getCrontabbin () + " -l"
+            args.append("-l")
+
+        try:
+            result = subprocess.run(args, capture_output=True, text=True, check=False)
+            if result.returncode != 0 and result.stdout == "":
+                message = (result.stderr or "").lower()
+                if not any(token in message for token in ("no crontab", "not found", "does not exist")):
+                    self.lines = []
+                    return []
+            self.lines = result.stdout.splitlines(True)
+        except (OSError, subprocess.SubprocessError):
+            self.lines = []
+            return []
 
         linecount = 0
-        self.lines = os.popen(execute).readlines()
         for line in self.lines:
-            #read line and get info
             array_or_false = self.parse(line)
-            if array_or_false != False:
-                if array_or_false[0] == 2:
-                    (minute, hour, day, month, weekday, command, comment, job_id, title, desc, output, display) = array_or_false[1]
-
-                    time = minute + " " + hour + " " + day + " " + month + " " + weekday
-
-                    #make the command smaller if the lenght is to long
-                    preview = self.__make_preview__ (command)
-
-                    #add task to treemodel in mainWindow
-                    if easy:
-                      easy_s = self.__easy__ (minute, hour, day, month, weekday)
-                    else:
-                      easy_s = ""
-
-                    if minute == "@reboot":
-                      data.append([title, easy_s , preview, line, linecount, time, self, None, job_id, "", "","", _("Recurrent"), "crontab", output, _("At reboot")])
-                    else:
-                      data.append([title, easy_s, preview, line, linecount, time, self, None, job_id, "", "","", _("Recurrent"), "crontab", output, time])
-
-
-            linecount = linecount + 1
-
-
+            if array_or_false != False and array_or_false[0] == 2:
+                (minute, hour, day, month, weekday, command_text, comment,
+                 job_id, title, desc, output, display) = array_or_false[1]
+                time = minute + " " + hour + " " + day + " " + month + " " + weekday
+                preview = self.__make_preview__(command_text)
+                easy_s = self.__easy__(minute, hour, day, month, weekday) if easy else ""
+                if minute == "@reboot":
+                    data.append([title, easy_s, preview, line, linecount, time,
+                                 self, None, job_id, "", "", "", _("Recurrent"),
+                                 "crontab", output, _("At reboot")])
+                else:
+                    data.append([title, easy_s, preview, line, linecount, time,
+                                 self, None, job_id, "", "", "", _("Recurrent"),
+                                 "crontab", output, time])
+            linecount += 1
         return data
 
 
@@ -760,15 +766,25 @@ class Crontab:
 
         tmp.close ()
 
-        #replace crontab config with new one in file
+        # Install through argv (never a shell string). fcron, dcron, Cronie
+        # and BusyBox expose compatible crontab file-install operations.
+        command = config.getCrontabCommand()
+        if not command:
+            os.unlink(path)
+            raise RuntimeError("No supported crontab implementation was found")
+        args = list(command)
         if self.root:
-            #print(config.getCrontabbin () + " " + path + " -u " + self.user)
-            os.system (config.getCrontabbin () + " -u " + self.user + " " + path )
-        else:
-            # print config.getCrontabbin () + " " + path
-            os.system (config.getCrontabbin () + " " + path)
-
-        os.unlink (path)
+            args.extend(["-u", self.user])
+        args.append(path)
+        try:
+            result = subprocess.run(args, capture_output=True, text=True, check=False)
+            if result.returncode != 0:
+                raise RuntimeError((result.stderr or result.stdout or "crontab installation failed").strip())
+        finally:
+            try:
+                os.unlink(path)
+            except OSError:
+                pass
 
 
     def __make_preview__ (self, str, preview_len = 0):

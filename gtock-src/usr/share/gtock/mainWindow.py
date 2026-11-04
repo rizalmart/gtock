@@ -48,6 +48,7 @@ import gettext
 
 import crontab
 import crontabEditor
+import anacronEditor
 import at
 import atEditor
 import setuserWindow
@@ -132,7 +133,13 @@ class main:
 
         ##configure the toolbar
         self.toolbar = self.builder.get_object("toolbar")
+        # Use the vertical icon-over-label presentation for toolbar actions.
+        # Gtk.ToolbarStyle.BOTH keeps the toolbar horizontal while placing
+        # each tool button's label underneath its icon.
+        if hasattr(self.toolbar, "set_style"):
+            self.toolbar.set_style(Gtk.ToolbarStyle.BOTH)
         self.add_button = Gtk.MenuToolButton(Gtk.STOCK_NEW)
+        self.add_button.set_label(_("Add"))
 
         self.add_button_menu = Gtk.Menu ()
         self.add_button_menu_add_crontab = Gtk.MenuItem ()
@@ -180,6 +187,37 @@ class main:
 
         self.toolbar.insert (self.add_button, 0)
         self.add_button.set_is_important (True)
+
+        # Ensure stock/tool buttons also display their labels in BOTH mode.
+        if hasattr(self.toolbar, "get_children"):
+            for toolbar_item in self.toolbar.get_children():
+                if hasattr(toolbar_item, "set_is_important"):
+                    toolbar_item.set_is_important(True)
+
+        # Anacron has its own editor, so expose it as a dedicated toolbar
+        # action rather than mixing it into the regular cron task menu.
+        anacron_icon = Gtk.Image.new_from_pixbuf (self.iconcalendar)
+        self.anacron_button = Gtk.ToolButton.new (anacron_icon, _("Anacron"))
+        self.anacron_button.set_tooltip_text (_("Manage Anacron tasks"))
+        self.anacron_button.set_is_important (True)
+
+        self.anacron_available = config.anacronInstalled()
+        
+        if self.anacron_available==True: 
+           self.anacron_button.hide()
+        else:
+           self.anacron_button.show()           
+        
+        self.toolbar.insert (self.anacron_button, 1)
+        self.anacron_button.connect ("clicked", self.on_add_anacron_task)
+
+        # Keep the button hidden when Anacron is unavailable, even if a later
+        # Gtk.Container.show_all() is called on the main window or toolbar.
+        # Gtk4 removed set_no_show_all(), so retain the explicit visibility
+        # state there as well.
+
+
+
 
         self.add_button.set_tooltip_text (_("Add a new task"))
         
@@ -275,6 +313,7 @@ class main:
         ##create crontab
         self.crontab = crontab.Crontab(self.root, self.user, self.uid, self.gid, self.user_home_dir)
         self.crontab_editor = crontabEditor.CrontabEditor(self, self.backend, self.crontab, self.template)
+        self.anacron_editor = anacronEditor.AnacronEditor(self)
         ##
 
         ##create at
@@ -390,7 +429,7 @@ class main:
                 print("ERROR: Could not load icon")
 
         if self.debug_flag:
-            if os.access ("/usr/share/gtock/pixmaps/crontab.svg", os.F_OK):
+            if os.access(config.getImagedir() + "/crontab.svg", os.F_OK):
                 self.iconcrontab = GdkPixbuf.Pixbuf.new_from_file_at_size (config.getImagedir() + "/crontab.svg", 19, 19)
                 self.bigiconcrontab = GdkPixbuf.Pixbuf.new_from_file_at_size (config.getImagedir() + "/crontab.svg", 49, 49)
         else:
@@ -401,7 +440,7 @@ class main:
                 print("ERROR: Could not load icon")
 
         if self.debug_flag:
-            if os.access ("/usr/share/gtock/pixmaps/calendar.svg", os.F_OK):
+            if os.access(config.getImagedir() + "/calendar.svg", os.F_OK):
                 self.iconcalendar = GdkPixbuf.Pixbuf.new_from_file_at_size (config.getImagedir() + "/calendar.svg", 19, 19)
                 self.bigiconcalendar = GdkPixbuf.Pixbuf.new_from_file_at_size (config.getImagedir() + "/calendar.svg", 49, 49)
         else:
@@ -412,7 +451,7 @@ class main:
                 print("ERROR: Could not load icon")
 
         if self.debug_flag:
-            if os.access ("/usr/share/gtock/pixmaps/template.svg", os.F_OK):
+            if os.access(config.getImagedir() + "/template.svg", os.F_OK):
                 self.icontemplate = GdkPixbuf.Pixbuf.new_from_file_at_size (config.getImagedir() + "/template.svg", 19, 19)
                 self.normalicontemplate = GdkPixbuf.Pixbuf.new_from_file_at_size (config.getImagedir() + "/template.svg", 25, 25)
                 self.bigicontemplate = GdkPixbuf.Pixbuf.new_from_file_at_size (config.getImagedir() + "/template.svg", 49, 49)
@@ -578,6 +617,9 @@ class main:
     def on_add_crontab_task (self, *args):
         self.addWindow.mode = 0
         self.addWindow.on_button_crontab_clicked  (*args)
+
+    def on_add_anacron_task (self, *args):
+        self.anacron_editor.show(*args)
 
     def on_add_from_template (self, *args):
         self.addWindow.mode = 0
