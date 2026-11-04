@@ -71,10 +71,10 @@ Comment[vi]=Quản lý các tác vụ hệ thống của bạn
 Comment[zh_CN]=管理您的系统任务
 Comment[zh_HK]=管理系統工作排程
 Comment[zh_TW]=管理系統工作排程
-Categories=System;
-Icon=/usr/share/gtock/pixmaps/gtock.svg
+Categories=System;X-SystemSchedule;Settings;X-XFCE-SettingsDialog;X-XFCE-SystemSettings;
+Icon=calendar
 Exec=gtock
 Type=Application
 StartupNotify=true
 Terminal=false
-
+X-XfceSettingsName=Scheduled Tasks
