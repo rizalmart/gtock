@@ -4,6 +4,8 @@ This is the fork of GNOME Schedule for managing crontabs and at tasks with some 
 
 It was ported to GTK+3 (GTK4 experimental) and Python 3.x
 
+![Screenshot](gtock-screenshot.png)
+
 ## Installation (for now; requires root access)
 * Just run install.sh script
 
