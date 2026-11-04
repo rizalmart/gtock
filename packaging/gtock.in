@@ -1,1 +1,2 @@
-
+#!/bin/sh
+exec python3 "@GTOCK_APPDIR@/gtock.py" "$@"
